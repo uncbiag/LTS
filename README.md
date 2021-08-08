@@ -1,12 +1,9 @@
 ## Local Temperature Scaling (LTS) for Probability Calibration
 This is the official repository for 
 
-Ding, Z., Han, X., Liu, P., & Niethammer, M. (2020)
-
+Zhipeng Ding, Xu Han, Peirong Liu, & Marc Niethammer
 **Local Temperature Scaling for Probability Calibration**
-
 *ICCV 2021*
-
 [paper](https://arxiv.org/abs/2008.05105)
 
 **LTS** is a spatially localized probability calibration approach for semantic segmentation.
