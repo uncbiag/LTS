@@ -1,4 +1,4 @@
-# Local Temperature Scaling (LTS) for Probability Calibration
+# Local Temperature Scaling (LTS)
 This is the official repository for 
 
 [Zhipeng Ding](https://biag.cs.unc.edu/author/zhipeng-ding/), [Xu Han](https://biag.cs.unc.edu/author/xu-han/), [Peirong Liu](https://biag.cs.unc.edu/author/peirong-liu/), and [Marc Niethammer](https://biag.cs.unc.edu/author/marc-niethammer/)  
