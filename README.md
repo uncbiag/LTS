@@ -1,7 +1,7 @@
-# Local Temperature Scaling (LTS) for Probability Calibration
+## Local Temperature Scaling (LTS) for Probability Calibration
 LTS is a spatially localized probability calibration approach for semantic segmentation.
 
 
-# Instructions
+## Instructions
 
-# Paper
+## Paper
