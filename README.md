@@ -32,7 +32,7 @@ In the following two figures, the top row shows the global reliability diagrams 
 ![c](./imgs/CamVid_local_reliability_diagram.png)
 
 ### Theoretical Justification
-Using KKT conditions, we can prove that 
+With KKT conditions, we can prove that 
 ```
 When the to-be-calibrated segmentation network is overconfident, 
 minimizing NLL w.r.t. TS, IBTS, and LTS results in solutions that are also the solutions of 
@@ -54,7 +54,7 @@ Specifically, in this paper, we use a simple tree-like convolutional network (Se
 </p>
 
 ## Walk-through Exemplar
-Here we use the [Tiramisu](https://arxiv.org/pdf/1611.09326.pdf) model for semantic segmentation on [CamVid](http://mi.eng.cam.ac.uk/research/projects/VideoRec/CamVid/) dataset. Note that other deep segmentation networks and datasets can also be used.  
+As an example, we use the [Tiramisu](https://arxiv.org/pdf/1611.09326.pdf) model for semantic segmentation on [CamVid](http://mi.eng.cam.ac.uk/research/projects/VideoRec/CamVid/) dataset. Note that other deep segmentation networks and datasets can also be used.  
 
 ### Deep Semantic Segmentation Network
 Tiramisu is a fully convolutional densenet. The implementation and training details can be found this github [repository](https://github.com/bfortuner/pytorch_tiramisu).
