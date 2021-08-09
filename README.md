@@ -54,7 +54,7 @@ Specifically, in this paper, we use a simple tree-like convolutional network (Se
 </p>
 
 ## Walk-through Exemplar
-Here we use the [Tiramisu](https://arxiv.org/pdf/1611.09326.pdf) model for semantic segmentation on [CamVid](http://mi.eng.cam.ac.uk/research/projects/VideoRec/CamVid/) dataset. Specifically, we use the pytorch based implementation from [Brendan Fortuner](https://github.com/bfortuner/pytorch_tiramisu). Note that other deep segmentation networks and datasets can also be used.  
+Here we use the [Tiramisu](https://arxiv.org/pdf/1611.09326.pdf) model for semantic segmentation on [CamVid](http://mi.eng.cam.ac.uk/research/projects/VideoRec/CamVid/) dataset. Note that other deep segmentation networks and datasets can also be used.  
 
 ### Deep Semantic Segmentation Network
 Tiramisu is a fully convolutional densenet. The implementation and training details can be found this github [repository](https://github.com/bfortuner/pytorch_tiramisu).
