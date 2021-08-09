@@ -10,7 +10,16 @@ This is the official repository for
 Different from previous probability calibration methods, **LTS** is a spatially localized probability calibration approach for semantic segmentation.
 
 ### Spatially Localized Feature
-In Figure
+In the following figure, Left: Predicted probabilities (confidence) by a U-Net. Middle: Average accuracy of each bin for 10 bins of reliability diagram with an equal bin width indicating different probability ranges that need to be optimized for different locations. Right: Temperature value map obtained via optimization, revealing different optimal localized Temperature scaling values at different locations.
+
+<p align="center">
+  <img src="./imgs/loc_diff_3.png" width="80%">
+</p>
+
+In the following two figures, the top row shows the global reliability diagrams for different methods for the entire image. The three rows underneath correspond to local reliability diagrams for the different methods for different local patches. Note that temperature scaling (TS) and image-based temperature scaling (IBTS) can calibrate probabilities well across the entire image. Visually, they are only slightly worse than LTS. However, when it comes to local patches, LTS can still successfully calibrate probabilities while TS and IBTS can not. In general, LTS improves local probability calibrations.
+
+![b](./imgs/local_reliability_diagram_2.png)
+![c](./imgs/CamVid_local_reliability_diagram.png)
 
 ### Theoretical Justification
 Using KKT conditions, we can prove that 
@@ -22,7 +31,17 @@ maximizing entropy of the calibrated probability w.r.t. TS, IBTS and LTS under t
 Similarly, there is another theorem to validate the effectiveness of TS, IBTS and LTS under the condition of underconfidence in Appendix. 
 
 ### Implementation
-In this paper, we use a simple tree-like convolutional network as in [(Lee et al.)](https://pages.ucsd.edu/~ztu/publication/pami_gpooling.pdf). However other neural network architectures could also work as illustrated by [(Bai et al.)](https://openreview.net/pdf?id=jsM6yvqiT0W)
+The overall architecture for probability calibration via (local) temperature scaling is shown in the following figure. The output logit map of a pre-trained semantic segmentation network (*Seg*) is locally scaled to produces the calibrated probabilities. *OP* denotes optimization or prediction via a deep convolutional network to obtain the (local) temperature values.
+
+<p align="center">
+  <img src="./imgs/learning_framework_4.png" width="60%">
+</p>
+
+Specifically, in this paper, we use a simple tree-like convolutional network (See figure below) as in [(Lee et al.)](https://pages.ucsd.edu/~ztu/publication/pami_gpooling.pdf). However other neural network architectures could also work as illustrated by [(Bai et al.)](https://openreview.net/pdf?id=jsM6yvqiT0W). The following figures are the high-level ilustration of the tree-like CNN. Left subfigure is for LTS and right subfigure is for IBTS. Detailed descriptions can be found in Appendix. 
+
+<p align="center">
+  <img src="./imgs/two_models_6.png" width="80%">
+</p>
 
 ## Instructions
 
