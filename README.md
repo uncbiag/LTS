@@ -54,11 +54,22 @@ Specifically, in this paper, we use a simple tree-like convolutional network (Se
 </p>
 
 ## Walk-through Exemplar
-
+Here we use the [Tiramisu](https://arxiv.org/pdf/1611.09326.pdf) model for semantic segmentation on [CamVid](http://mi.eng.cam.ac.uk/research/projects/VideoRec/CamVid/) dataset. Specifically, we use the pytorch based implementation from [Brendan Fortuner](https://github.com/bfortuner/pytorch_tiramisu). Note that other deep segmentation networks and datasets can also be used.  
 
 ### Deep Semantic Segmentation Network
+Tiramisu is a fully convolutional densenet. The implementation and training details can be found this github [repository](https://github.com/bfortuner/pytorch_tiramisu).
 
 ### Train Calibration Models
+Here is a collection of probability calibration models that can be used as baselines:
+| Methods  | Implementations |
+| ------------- | ------------- |
+| [Temperature Scaling](https://arxiv.org/pdf/1706.04599.pdf)  | [TS](https://github.com/gpleiss/temperature_scaling)  |
+| [Vector Scaling](https://arxiv.org/pdf/1706.04599.pdf)  | [VS](https://github.com/dirichletcal/experiments_neurips)  |
+| [Isotonic Regression](https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.13.7457&rep=rep1&type=pdf)  | [IsoReg](https://github.com/zhang64-llnl/Mix-n-Match-Calibration)  |
+| [Ensemble Temperature Scaling](https://arxiv.org/pdf/2003.07329.pdf)   | [ETS](https://github.com/zhang64-llnl/Mix-n-Match-Calibration)   |
+| [Dirichlet Calibration](https://arxiv.org/pdf/1910.12656.pdf)  | [DirODIR](https://github.com/dirichletcal/experiments_neurips)  |
+| [Focal Loss Calibration](https://arxiv.org/pdf/2002.09437.pdf)  | [FL](https://github.com/torrvision/focal_calibration/tree/main/Losses)  |
+| [Maximum Mean Calibration Error](https://proceedings.mlr.press/v80/kumar18a/kumar18a.pdf)  | [MMCE](https://github.com/torrvision/focal_calibration/tree/main/Losses)  | 
 
 ### Evaluation
 
