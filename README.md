@@ -43,7 +43,14 @@ Specifically, in this paper, we use a simple tree-like convolutional network (Se
   <img src="./imgs/two_models_6.png" width="80%">
 </p>
 
-## Instructions
+## Walk-through Exemplar
+
+
+### Deep Semantic Segmentation Network
+
+### Train Calibration Models
+
+### Evaluation
 
 
 ## Paper
