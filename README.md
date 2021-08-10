@@ -1,10 +1,9 @@
 # Local Temperature Scaling (LTS)
 This is the official repository for 
-
-[Zhipeng Ding](https://biag.cs.unc.edu/author/zhipeng-ding/), [Xu Han](https://biag.cs.unc.edu/author/xu-han/), [Peirong Liu](https://biag.cs.unc.edu/author/peirong-liu/), and [Marc Niethammer](https://biag.cs.unc.edu/author/marc-niethammer/)  
-**Local Temperature Scaling for Probability Calibration**  
-*ICCV 2021*  
-[paper](https://arxiv.org/abs/2008.05105)  
+ 
+**Local Temperature Scaling for Probability Calibration**   
+[Zhipeng Ding](https://biag.cs.unc.edu/author/zhipeng-ding/), [Xu Han](https://biag.cs.unc.edu/author/xu-han/), [Peirong Liu](https://biag.cs.unc.edu/author/peirong-liu/), and [Marc Niethammer](https://biag.cs.unc.edu/author/marc-niethammer/)   
+*ICCV 2021*  [eprint arxiv](https://arxiv.org/abs/2008.05105)  
 
 If you use LTS or some part of the code, please cite:
 ```
