@@ -60,7 +60,7 @@ As an example, we use the [Tiramisu](https://arxiv.org/pdf/1611.09326.pdf) model
 Tiramisu is a fully convolutional densenet. The implementation and training details can be found this github [repository](https://github.com/bfortuner/pytorch_tiramisu).
 
 ### Train Calibration Models
-The Table below is a collection of probability calibration models that can be used as baselines:
+The table below is a collection of probability calibration models that can be used as baselines:
 | Methods  | Implementations |
 | ------------- | ------------- |
 | [Temperature Scaling](https://arxiv.org/pdf/1706.04599.pdf)  | [TS](https://github.com/gpleiss/temperature_scaling)  |
