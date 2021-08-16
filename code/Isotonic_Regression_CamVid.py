@@ -1,0 +1,118 @@
+import torch
+import torchvision
+from PIL import Image
+from torchvision import transforms
+import numpy as np
+import glob
+from Tiramisu_calibration_Dataset import *
+from torch.utils.data import DataLoader
+from calibration_models import *
+from torch import nn, optim
+import os
+from tensorboardX import SummaryWriter
+import time
+import datetime
+import os
+import sys
+import argparse
+sys.path.append(os.path.realpath(".."))
+from scipy import optimize
+from sklearn.isotonic import IsotonicRegression
+from probability_measure_CamVid import Calculate_ECE, Calculate_MCE, Calculate_SCE, Calculate_ACE
+import pickle
+
+total_logits_list = glob.glob('/YOUR_PATH_TO_CamVid/results/val/*_logit.pt')
+total_logits_list.sort()
+total_logits_test_list = glob.glob('/YOUR_PATH_TO_CamVid/results/test/*_logit.pt')
+total_logits_test_list.sort()
+
+train_logits_list = total_logits_list[:90]
+val_logits_list   = total_logits_list[90:]
+
+torch.cuda.manual_seed(0)
+
+TIRAMISU_train = TIRAMISU_CALIBRATION(train_logits_list, 'val')
+TIRAMISU_train_dataloader = DataLoader(TIRAMISU_train, batch_size=1, shuffle=True, num_workers=1, pin_memory=False)
+TIRAMISU_val = TIRAMISU_CALIBRATION(val_logits_list, 'val')
+TIRAMISU_val_dataloader = DataLoader(TIRAMISU_val, batch_size=1, shuffle=False, num_workers=1, pin_memory=False)
+TIRAMISU_test = TIRAMISU_CALIBRATION(total_logits_test_list, 'test')
+TIRAMISU_test_dataloader = DataLoader(TIRAMISU_test, batch_size=1, shuffle=False, num_workers=1, pin_memory=False)
+
+print("merge individual cases")
+all_probs = None
+all_labels = None
+for i, (val_image, val_logits, val_labels, val_preds, val_boundary) in enumerate(TIRAMISU_val_dataloader):
+    test_probs = torch.softmax(val_logits, dim=1).detach().squeeze().cpu().numpy()
+    val_label_array = val_labels.detach().squeeze().cpu().numpy()
+    prob_img_array_select = np.transpose(test_probs.reshape((12, -1)))
+    val_label_array_select = val_label_array
+    val_label_array_select_onehot = np.eye(12)[val_label_array_select]
+    if all_probs is None:
+        all_probs = prob_img_array_select
+        all_labels = val_label_array_select_onehot
+    else:
+        all_probs = np.concatenate((all_probs, prob_img_array_select), axis=0)
+        all_labels = np.concatenate((all_labels, val_label_array_select_onehot), axis=0)
+
+ir = IsotonicRegression(out_of_bounds='clip')
+y_ = ir.fit_transform(all_probs.flatten(), (all_labels.flatten()))
+
+
+res_list_All_ECE = []
+res_list_All_MCE = []
+res_list_All_SCE = []
+res_list_All_ACE = []
+res_list_Boundary_ECE = []
+res_list_Boundary_MCE = []
+res_list_Boundary_SCE = []
+res_list_Boundary_ACE = []
+
+for ind, (test_image, test_logits, test_labels, test_preds, test_boundary) in enumerate(TIRAMISU_test_dataloader):
+    print(ind)
+
+    image_shape = test_logits.squeeze().shape
+
+    test_probs = np.transpose(torch.softmax(test_logits, dim=1).detach().squeeze().cpu().numpy().reshape((12, -1)))
+    ir_correction = np.transpose(ir.predict(test_probs.flatten()).reshape((-1, 12))).reshape(image_shape)
+
+    pred_img_array = test_preds.squeeze().cpu().numpy()
+    gt_img_array   = test_labels.squeeze().cpu().numpy()
+    boundary_img_array = test_boundary.squeeze().cpu().numpy()
+
+    prob_img_array = np.max(ir_correction, axis=0)/np.sum(ir_correction, axis=0)
+
+    res_list_All_ECE.append(Calculate_ECE(confidence=prob_img_array, prediction=pred_img_array, gt=gt_img_array, boundary=boundary_img_array, boundary_on=False, n_bins=10))
+    res_list_All_MCE.append(Calculate_MCE(confidence=prob_img_array, prediction=pred_img_array, gt=gt_img_array, boundary=boundary_img_array, boundary_on=False, n_bins=10))
+    res_list_All_SCE.append(Calculate_SCE(confidence=prob_img_array, prediction=pred_img_array, gt=gt_img_array, boundary=boundary_img_array, boundary_on=False, n_bins=10))
+    res_list_All_ACE.append(Calculate_ACE(confidence=prob_img_array, prediction=pred_img_array, gt=gt_img_array, boundary=boundary_img_array, boundary_on=False, n_bins=10))
+    res_list_Boundary_ECE.append(Calculate_ECE(confidence=prob_img_array, prediction=pred_img_array, gt=gt_img_array, boundary=boundary_img_array, boundary_on=True, n_bins=10))
+    res_list_Boundary_MCE.append(Calculate_MCE(confidence=prob_img_array, prediction=pred_img_array, gt=gt_img_array, boundary=boundary_img_array, boundary_on=True, n_bins=10))
+    res_list_Boundary_SCE.append(Calculate_SCE(confidence=prob_img_array, prediction=pred_img_array, gt=gt_img_array, boundary=boundary_img_array, boundary_on=True, n_bins=10))
+    res_list_Boundary_ACE.append(Calculate_ACE(confidence=prob_img_array, prediction=pred_img_array, gt=gt_img_array, boundary=boundary_img_array, boundary_on=True, n_bins=10))
+
+with open("./CamVid_result/"+"IR_CamVid_ICCV_All_ECE.txt", "wb") as fp_ECE:
+    pickle.dump(res_list_All_ECE, fp_ECE, protocol=2)
+with open("./CamVid_result/"+"IR_CamVid_ICCV_All_MCE.txt", "wb") as fp_MCE:
+    pickle.dump(res_list_All_MCE, fp_MCE, protocol=2)
+with open("./CamVid_result/"+"IR_CamVid_ICCV_All_SCE.txt", "wb") as fp_SCE:
+    pickle.dump(res_list_All_SCE, fp_SCE, protocol=2)
+with open("./CamVid_result/"+"IR_CamVid_ICCV_All_ACE.txt", "wb") as fp_ACE:
+    pickle.dump(res_list_All_ACE, fp_ACE, protocol=2)
+with open("./CamVid_result/"+"IR_CamVid_ICCV_Boundary_ECE.txt", "wb") as fp_B_ECE:
+    pickle.dump(res_list_Boundary_ECE, fp_B_ECE, protocol=2)
+with open("./CamVid_result/"+"IR_CamVid_ICCV_Boundary_MCE.txt", "wb") as fp_B_MCE:
+    pickle.dump(res_list_Boundary_MCE, fp_B_MCE, protocol=2)
+with open("./CamVid_result/"+"IR_CamVid_ICCV_Boundary_SCE.txt", "wb") as fp_B_SCE:
+    pickle.dump(res_list_Boundary_SCE, fp_B_SCE, protocol=2)
+with open("./CamVid_result/"+"IR_CamVid_ICCV_Boundary_ACE.txt", "wb") as fp_B_ACE:
+    pickle.dump(res_list_Boundary_ACE, fp_B_ACE, protocol=2)
+
+print('ECE All: ', np.mean(res_list_All_ECE), np.std(res_list_All_ECE))
+print('MCE All: ', np.mean(res_list_All_MCE), np.std(res_list_All_MCE))
+print('SCE All: ', np.mean(res_list_All_SCE), np.std(res_list_All_SCE))
+print('ACE All: ', np.mean(res_list_All_ACE), np.std(res_list_All_ACE))
+print('ECE Boundary: ', np.mean(res_list_Boundary_ECE), np.std(res_list_Boundary_ECE))
+print('MCE Boundary: ', np.mean(res_list_Boundary_MCE), np.std(res_list_Boundary_MCE))
+print('SCE Boundary: ', np.mean(res_list_Boundary_SCE), np.std(res_list_Boundary_SCE))
+print('ACE Boundary: ', np.mean(res_list_Boundary_ACE), np.std(res_list_Boundary_ACE))
+

@@ -46,7 +46,7 @@ The overall architecture for probability calibration via (local) temperature sca
   <img src="./imgs/learning_framework_4.png" width="60%">
 </p>
 
-Specifically, in this paper, we use a simple tree-like convolutional network (See figure below) as in [(Lee et al.)](https://pages.ucsd.edu/~ztu/publication/pami_gpooling.pdf). However other neural network architectures could also work as illustrated by [(Bai et al.)](https://openreview.net/pdf?id=jsM6yvqiT0W). The following figures are the high-level ilustration of the tree-like CNN. Left subfigure is for LTS and right subfigure is for IBTS. Detailed descriptions can be found in Appendix. 
+Specifically, in this paper, we use a simple tree-like convolutional network (See figure below) as in [(Lee et al.)](https://pages.ucsd.edu/~ztu/publication/pami_gpooling.pdf). However other neural network architectures could also work as illustrated by [(Bai et al.)](https://openreview.net/pdf?id=jsM6yvqiT0W). The following figures are the high-level illustration of the tree-like CNN. Left subfigure is for LTS and right subfigure is for IBTS. Detailed descriptions can be found in Appendix. 
 
 <p align="center">
   <img src="./imgs/two_models_6.png" width="80%">
@@ -56,7 +56,7 @@ Specifically, in this paper, we use a simple tree-like convolutional network (Se
 As an example, we use the [Tiramisu](https://arxiv.org/pdf/1611.09326.pdf) model for semantic segmentation on [CamVid](http://mi.eng.cam.ac.uk/research/projects/VideoRec/CamVid/) dataset. Note that other deep segmentation networks and datasets can also be used.  
 
 ### Deep Semantic Segmentation Network
-Tiramisu is a fully convolutional densenet. The implementation and training details can be found this github [repository](https://github.com/bfortuner/pytorch_tiramisu).
+Tiramisu is a fully convolutional densenet. The implementation and training details can be found this github [repository](https://github.com/bfortuner/pytorch_tiramisu). You need to modify the code accordingly in order to make it addaptive to your settings.
 
 ### Train Calibration Models
 The table below is a collection of probability calibration models that can be used as baselines:
