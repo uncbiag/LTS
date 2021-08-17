@@ -65,7 +65,7 @@ To train LTS, simply run
 python Tiramisu_calibration.py --gpu 0 --model-name LTS --epochs 200 --batch-size 4 --lr 1e-4 --seed 2021 --save-per-epoch 1 
 ```
 
-The table below is a collection of probability calibration models that can be used as baselines. You could pull this reposteries and modify the code accoradingly.
+The table below is a collection of probability calibration models that can be used as baselines. You could pull these reposteries and modify the code accoradingly.
 | Methods  | Implementations |
 | :-------------: | :-------------: |
 | [Temperature Scaling](https://arxiv.org/pdf/1706.04599.pdf)  | [TS](https://github.com/gpleiss/temperature_scaling)  |
