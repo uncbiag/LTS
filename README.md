@@ -59,7 +59,13 @@ As an example, we use the [Tiramisu](https://arxiv.org/pdf/1611.09326.pdf) model
 Tiramisu is a fully convolutional densenet. The implementation and training details can be found this github [repository](https://github.com/bfortuner/pytorch_tiramisu). You need to modify the code accordingly in order to make it addaptive to your settings.
 
 ### Train Calibration Models
-The table below is a collection of probability calibration models that can be used as baselines:
+After getting logits from the segmentation model and properly set the dataloader, the next step is to train calibration model.
+To train LTS, simply run
+```
+python Tiramisu_calibration.py --gpu 0 --model-name LTS --epochs 200 --batch-size 4 --lr 1e-4 --seed 2021 --save-per-epoch 1 
+```
+
+The table below is a collection of probability calibration models that can be used as baselines. You could pull this reposteries and modify the code accoradingly.
 | Methods  | Implementations |
 | ------------- | ------------- |
 | [Temperature Scaling](https://arxiv.org/pdf/1706.04599.pdf)  | [TS](https://github.com/gpleiss/temperature_scaling)  |
@@ -71,4 +77,8 @@ The table below is a collection of probability calibration models that can be us
 | [Maximum Mean Calibration Error](https://proceedings.mlr.press/v80/kumar18a/kumar18a.pdf)  | [MMCE](https://github.com/torrvision/focal_calibration/tree/main/Losses)  | 
 
 ### Evaluation
-
+To evaluate the four calibration metrics (ECE, MCE, SCE, and ACE) defined in the paper, simply run
+```
+python probability_measure_CamVid.py --gpu 0 --model_name LTS 
+python probability_measure_Local_CamVid.py --gpu 0 --model_name LTS
+```
