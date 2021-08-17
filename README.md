@@ -82,3 +82,4 @@ To evaluate the four calibration metrics (ECE, MCE, SCE, and ACE) defined in the
 python probability_measure_CamVid.py --gpu 0 --model_name LTS 
 python probability_measure_Local_CamVid.py --gpu 0 --model_name LTS
 ```
+For multi-atlas segmentation experiment to validate the probability calibration, please refer to [VoteNet-Family](https://github.com/uncbiag/VoteNet-Family.git) for details.
