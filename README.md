@@ -67,7 +67,7 @@ python Tiramisu_calibration.py --gpu 0 --model-name LTS --epochs 200 --batch-siz
 
 The table below is a collection of probability calibration models that can be used as baselines. You could pull this reposteries and modify the code accoradingly.
 | Methods  | Implementations |
-| ------------- | ------------- |
+| :-------------: | :-------------: |
 | [Temperature Scaling](https://arxiv.org/pdf/1706.04599.pdf)  | [TS](https://github.com/gpleiss/temperature_scaling)  |
 | [Vector Scaling](https://arxiv.org/pdf/1706.04599.pdf)  | [VS](https://github.com/dirichletcal/experiments_neurips)  |
 | [Isotonic Regression](https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.13.7457&rep=rep1&type=pdf)  | [IsoReg](https://github.com/zhang64-llnl/Mix-n-Match-Calibration)  |
