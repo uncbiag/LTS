@@ -52,7 +52,7 @@ Specifically, in this paper, we use a simple tree-like convolutional network (Se
   <img src="./imgs/two_models_6.png" width="80%">
 </p>
 
-## Walk-through Exemplar
+## Walk-through Example
 As an example, we use the [Tiramisu](https://arxiv.org/pdf/1611.09326.pdf) model for semantic segmentation on [CamVid](http://mi.eng.cam.ac.uk/research/projects/VideoRec/CamVid/) dataset. Note that other deep segmentation networks and datasets can also be used.  
 
 ### Deep Semantic Segmentation Network
