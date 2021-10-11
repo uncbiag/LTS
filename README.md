@@ -15,7 +15,7 @@ If you use LTS or some part of the code, please cite:
 }
 ```
 
-## Key Feasures
+## Key Features
 Different from previous probability calibration methods, **LTS** is a spatially localized probability calibration approach for semantic segmentation.
 
 ### Spatially Localized Feature
