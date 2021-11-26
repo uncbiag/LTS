@@ -7,11 +7,12 @@ This is the official repository for
 
 If you use LTS or some part of the code, please cite:
 ```
-@article{ding2020local,
+@inproceedings{ding2021local,
   title={Local temperature scaling for probability calibration},
   author={Ding, Zhipeng and Han, Xu and Liu, Peirong and Niethammer, Marc},
-  journal={arXiv preprint arXiv:2008.05105},
-  year={2020}
+  booktitle={Proceedings of the IEEE/CVF International Conference on Computer Vision},
+  pages={6889--6899},
+  year={2021}
 }
 ```
 
